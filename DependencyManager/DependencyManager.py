@@ -35,7 +35,7 @@ def tryImportElseDownload(strWithImp):
 		try:
 			exec(line)
 		except ModuleNotFoundError:
-			print (line + 'not installed in this computer')
+			print (line + ' not installed in this computer')
 			if (findWholeWord('import')(line) and findWholeWord('from')(line)):	
 				imports.append(re.findall(r'from\s+(.+?)\s+import',line)[0])	
 			else:
@@ -44,15 +44,19 @@ def tryImportElseDownload(strWithImp):
 					imports.append(word)
 	import sys
 	import subprocess
-	for word in imports:
-		try:
-			subprocess.check_call([sys.executable, '-m', 'pip', 'install', word])
-			__import__(word)
-			print('Librery  \"' + word +'\" was installed\n' + word)
-		except:
-			print('Librery \"' + word +'\" was not found' )
+	print('this libreries weren\'t installed in this computer ')
+	print(imports)
+	if input("\nIf you want to install missing dependencies print \"Yes\"\n else print any thing to exit programm...\n")=="Yes":
+		for word in imports:
+			try:
+				subprocess.check_call([sys.executable, '-m', 'pip', 'install', word])
+				__import__(word)
+				print('Librery  \"' + word +'\" was installed\n' + word)
+			except:
+				print('Librery \"' + word +'\" was not found' )
 		
-			
+	else:
+		print("Dependencies weren't installed")
 		
 
 
